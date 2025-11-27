@@ -670,3 +670,4 @@
 /Users/colef/eclipse-workspace/eclipse-personal/redTomato/redTomato/obj/Debug/net10.0/refint/redTomato.dll
 /Users/colef/eclipse-workspace/eclipse-personal/redTomato/redTomato/obj/Debug/net10.0/redTomato.pdb
 /Users/colef/eclipse-workspace/eclipse-personal/redTomato/redTomato/obj/Debug/net10.0/ref/redTomato.dll
+/Users/colef/eclipse-workspace/eclipse-personal/redTomato/redTomato/obj/Debug/net10.0/redTomato.sourcelink.json
