@@ -3,7 +3,49 @@
 
 <body>
     <h1 style="width:600px">hi there I'm of a larger width</h1>
-    <div style="width:600px">
-        <input type="range" min="1" max="400" value="50" class="slider" id="myRange">
-    </div>
+    <Slider Min="0" Max="100" @bind-Value="sliderValue"/>
+    
+        <div>
+            <label>Timer Seconds</label>
+            <!---<input bind-value="InputValue" @bind-value:event="OnInput" Placeholder="Please enter a time"/> --->
+            <input value="@Value" @oninput="ValueChanged" />
+        </div>
+
+    <button @onClick="StartTimer">Start</button>
+    <button @onClick="StopTimer">Stop</button>
+    <button @onClick="ResetTimer">Reset</button>
+
 </body>
+
+@code {
+    /* private int _holder;
+
+    [Parameter]
+    public int Holder { get; set; };
+    {
+        get => _holder;
+        set
+        {
+            if(Holder == _holder)
+                return;
+
+                _holder = Holder;
+                if(OnInput.HasDelegate){
+                    OnInput.InvokeAsync(_holder);
+                }
+        }
+    } */
+
+    [Parameter]
+   public string Value { get; set; }
+
+   [Parameter]
+   public EventCallback<ChangeEventArgs> ValueChanged { get; set; }
+
+
+    private int sliderValue = 50;
+    private TimeSpan timeSpan;
+    private int timerNumber = 20;
+
+    //private void Start
+}

@@ -1,0 +1,40 @@
+<input class="slider"
+    type="range"
+    min="@Min"
+    max ="@Max"
+    @bind="@Value"
+    @bind:event="oninput"/>
+
+<p> Selected Value: @Value</p>
+
+<style>
+
+    .slider{
+        width: 600px;
+        height: 15px;
+        opacity: 0.7;
+        border-radius:5px;
+        appearance: none;
+        background: linear-gradient(to right,
+                    #4CAF50 calc(@Value / @Max * 100%),
+                    #D3D3D3 calc(@Value / @Max * 100%));
+    }
+
+    .slider:hover{
+        opacity: 1;
+    }
+</style>
+
+@code {
+    [Parameter]
+    public int Min {get; set; } //Is this a getter and setter?
+
+    [Parameter]
+    public int Max {get; set; }
+
+    [Parameter]
+    public int Value {get; set; }
+
+    [Parameter]
+    public EventCallback<int>ValueChanged {get; set; }
+}
