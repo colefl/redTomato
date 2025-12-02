@@ -6,9 +6,9 @@
     <Slider Min="0" Max="100" @bind-Value="sliderValue"/>
     
         <div>
-            <label>Timer Seconds</label>
             <!---<input bind-value="InputValue" @bind-value:event="OnInput" Placeholder="Please enter a time"/> --->
-            <input value="@Value" @oninput="ValueChanged" />
+            <p>Time: @timeSpan.ToString() </p>
+            <input value="@Value" @oninput="ValueChanged"/>
         </div>
 
     <button @onClick="StartTimer">Start</button>
@@ -18,23 +18,6 @@
 </body>
 
 @code {
-    /* private int _holder;
-
-    [Parameter]
-    public int Holder { get; set; };
-    {
-        get => _holder;
-        set
-        {
-            if(Holder == _holder)
-                return;
-
-                _holder = Holder;
-                if(OnInput.HasDelegate){
-                    OnInput.InvokeAsync(_holder);
-                }
-        }
-    } */
 
     [Parameter]
    public string Value { get; set; }
@@ -45,7 +28,33 @@
 
     private int sliderValue = 50;
     private TimeSpan timeSpan;
-    private int timerNumber = 20;
+    private DateTime startTime;
+    private Timer timer;
+    private bool isRunning = false;
 
-    //private void Start
+    private void StartTimer(){
+        if(!isRunning){
+            startTime = DateTime.Now; //The time is now
+            timer = new Timer(UpdateTime, null, 0, 1000);
+            isRunning = true;
+            Console.WriteLine(isRunning);
+        }
+    }
+
+    private void StopTimer(){
+        if(isRunning){
+            timer?.Dispose();
+            isRunning = false;
+        }
+    }
+
+    private void ResetTimer(){
+        StopTimer();
+        timeSpan = TimeSpan.Zero;
+    }
+
+    private void UpdateTime(object state){
+        timeSpan = DateTime.Now - startTime;
+        InvokeAsync(StateHasChanged);
+    }
 }
