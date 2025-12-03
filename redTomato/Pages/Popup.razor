@@ -1,21 +1,19 @@
 ﻿@page "/popup.html"
 @inherits BasePage
 
-<body>
-    <h1 style="width:600px">hi there I'm of a larger width</h1>
-    <Slider Min="0" Max="100" @bind-Value="sliderValue"/>
-    
-        <div>
-            <!---<input bind-value="InputValue" @bind-value:event="OnInput" Placeholder="Please enter a time"/> --->
-            <p>Time: @timeSpan.ToString() </p>
-            <input value="@Value" @oninput="ValueChanged"/>
-        </div>
+<h1 style="width:600px">hi there I'm of a larger width</h1>
+<Slider Min="0" Max="100" @bind-Value="sliderValue"/>
 
-    <button @onClick="StartTimer">Start</button>
-    <button @onClick="StopTimer">Stop</button>
-    <button @onClick="ResetTimer">Reset</button>
+    <div>
+        <!---<input bind-value="InputValue" @bind-value:event="OnInput" Placeholder="Please enter a time"/> --->
+        <p>Time: @timeSpan.ToString(@"hh\:mm\:ss") </p>
+        <p> isRunning @isRunning.ToString() </p>
+        <input value="@Value" @oninput="ValueChanged"/>
+    </div>
 
-</body>
+<button @onclick="StartTimer">Start</button>
+<button @onclick="StopTimer">Stop</button>
+<button @onclick="ResetTimer">Reset</button>
 
 @code {
 
@@ -33,11 +31,11 @@
     private bool isRunning = false;
 
     private void StartTimer(){
+        Console.WriteLine("hello this is working");
         if(!isRunning){
             startTime = DateTime.Now; //The time is now
             timer = new Timer(UpdateTime, null, 0, 1000);
             isRunning = true;
-            Console.WriteLine(isRunning);
         }
     }
 
