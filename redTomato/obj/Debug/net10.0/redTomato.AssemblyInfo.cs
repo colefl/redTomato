@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("redTomato")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4a4b0d01384019e827e31f51ad86687aaa7a1753")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d96f287c3444bb6ec3a37075df6119a1405e2d80")]
 [assembly: System.Reflection.AssemblyProductAttribute("redTomato")]
 [assembly: System.Reflection.AssemblyTitleAttribute("redTomato")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -8,7 +8,9 @@
         <!---<input bind-value="InputValue" @bind-value:event="OnInput" Placeholder="Please enter a time"/> --->
         <p>Time: @timeSpan.ToString(@"hh\:mm\:ss") </p>
         <p> isRunning @isRunning.ToString() </p>
-        <input value="@Value" @oninput="ValueChanged"/>
+        <input @bind-value="@Hours" Placeholder="Hours" />
+        <input @bind-value="@Minutes" Placeholder="Minutes" />
+        <input @bind-value="@Seconds" Placeholder="Seconds" />
     </div>
 
 <button @onclick="StartTimer">Start</button>
@@ -17,21 +19,23 @@
 
 @code {
 
-    [Parameter]
-   public string Value { get; set; }
-
    [Parameter]
    public EventCallback<ChangeEventArgs> ValueChanged { get; set; }
 
 
-    private int sliderValue = 50;
+   private int? Hours;
+   private int? Minutes;
+   private int? Seconds;
+   private float? totalTime = Hours * 3600 + Minutes * 60 + Seconds;
+
+
+    private int sliderValue = 100;
     private TimeSpan timeSpan;
     private DateTime startTime;
     private Timer timer;
     private bool isRunning = false;
 
     private void StartTimer(){
-        Console.WriteLine("hello this is working");
         if(!isRunning){
             startTime = DateTime.Now; //The time is now
             timer = new Timer(UpdateTime, null, 0, 1000);
@@ -52,7 +56,7 @@
     }
 
     private void UpdateTime(object state){
-        timeSpan = DateTime.Now - startTime;
+        timeSpan = totalTime - DateTime.Now - startTime;
         InvokeAsync(StateHasChanged);
     }
 }
