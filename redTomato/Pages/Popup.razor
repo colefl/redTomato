@@ -2,34 +2,27 @@
 @inherits BasePage
 
 <h1 style="width:600px">hi there I'm of a larger width</h1>
-<Slider Min="0" Max="100" @bind-Value="sliderValue"/>
-
-    <div>
-        <!---<input bind-value="InputValue" @bind-value:event="OnInput" Placeholder="Please enter a time"/> --->
-        <p>Time: @timeSpan.ToString(@"hh\:mm\:ss") </p>
-        <p> isRunning @isRunning.ToString() </p>
-        <input @bind-value="@Hours" Placeholder="Hours" />
-        <input @bind-value="@Minutes" Placeholder="Minutes" />
-        <input @bind-value="@Seconds" Placeholder="Seconds" />
-    </div>
+<Slider Min="0" Max="100" @bind-SliderValue="sliderValue" />
 
 <button @onclick="StartTimer">Start</button>
 <button @onclick="StopTimer">Stop</button>
 <button @onclick="ResetTimer">Reset</button>
+
+    <div>
+        <Alarm Hours="0" Minutes="0" Seconds="0" @bind-Value:event="totalTime"/>
+    </div>
 
 @code {
 
    [Parameter]
    public EventCallback<ChangeEventArgs> ValueChanged { get; set; }
 
-
-   private int? Hours;
-   private int? Minutes;
-   private int? Seconds;
-   private float? totalTime = Hours * 3600 + Minutes * 60 + Seconds;
+   [Parameter]
+   public EventCallback<ChangeEventArgs> TimerChanged { get; set; }
 
 
     private int sliderValue = 100;
+    private int totalTime = 0;
     private TimeSpan timeSpan;
     private DateTime startTime;
     private Timer timer;

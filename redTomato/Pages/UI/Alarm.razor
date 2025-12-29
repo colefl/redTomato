@@ -1,0 +1,26 @@
+<input class="alarm"
+    type="input"
+    hours="@Hours"
+    minutes="@Minutes"
+    seconds="@seconds"
+    @bind="@Time"
+    @bind-event="onInput"/>
+    
+<p> Timer: @Time</p>
+
+<style>
+</style>
+
+@code {
+    [Parameter]
+    public int Hours {get; set; } //Is this a getter and setter?
+
+    [Parameter]
+    public int Minutes {get; set; }
+
+    [Parameter]
+    public int Seconds {get; set; }
+
+    [Parameter]
+    public EventCallback<int>TimerChanged {get; set; }
+}
