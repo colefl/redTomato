@@ -2,10 +2,10 @@
     type="range"
     min="@Min"
     max ="@Max"
-    @bind="@Value"
+    @bind="@sliderValue"
     @bind:event="oninput"/>
 
-<p> Selected Value: @SliderValue</p>
+<p> Selected Value: @sliderValue</p>
 
 <style>
 
@@ -37,4 +37,6 @@
 
     [Parameter]
     public EventCallback<int>ValueChanged {get; set; }
+
+    private int sliderValue;
 }

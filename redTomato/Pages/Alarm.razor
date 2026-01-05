@@ -2,11 +2,11 @@
     type="input"
     hours="@Hours"
     minutes="@Minutes"
-    seconds="@seconds"
-    @bind="@Time"
-    @bind-event="onInput"/>
+    seconds="@Seconds"
+    @bind="@totalTime"
+    @bind:event="onInput"/>
     
-<p> Timer: @Time</p>
+<p> Timer: @totalTime</p>
 
 <style>
 </style>
@@ -23,4 +23,6 @@
 
     [Parameter]
     public EventCallback<int>TimerChanged {get; set; }
+
+    private int totalTime;
 }

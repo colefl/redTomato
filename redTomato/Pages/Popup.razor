@@ -2,14 +2,14 @@
 @inherits BasePage
 
 <h1 style="width:600px">hi there I'm of a larger width</h1>
-<Slider Min="0" Max="100" @bind-SliderValue="sliderValue" />
+<Slider Min="0" Max="100" @bind="sliderValue" />
 
 <button @onclick="StartTimer">Start</button>
 <button @onclick="StopTimer">Stop</button>
 <button @onclick="ResetTimer">Reset</button>
 
     <div>
-        <Alarm Hours="0" Minutes="0" Seconds="0" @bind-Value:event="totalTime"/>
+        <Alarm Hours="0" Minutes="0" Seconds="0" @bind:event="totalTime"/>
     </div>
 
 @code {
@@ -21,8 +21,8 @@
    public EventCallback<ChangeEventArgs> TimerChanged { get; set; }
 
 
-    private int sliderValue = 100;
-    private int totalTime = 0;
+    public int sliderValue = 100;
+    public int totalTime = 0;
     private TimeSpan timeSpan;
     private DateTime startTime;
     private Timer timer;
@@ -49,7 +49,6 @@
     }
 
     private void UpdateTime(object state){
-        timeSpan = totalTime - DateTime.Now - startTime;
         InvokeAsync(StateHasChanged);
     }
 }

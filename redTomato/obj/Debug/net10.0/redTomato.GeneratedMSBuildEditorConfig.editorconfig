@@ -32,6 +32,10 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/colef/eclipse-workspace/eclipse-personal/redTomato/redTomato/Pages/Alarm.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWxhcm0ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/colef/eclipse-workspace/eclipse-personal/redTomato/redTomato/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSG9tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -48,12 +52,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUG9wdXAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/colef/eclipse-workspace/eclipse-personal/redTomato/redTomato/Pages/UI/Alarm.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVUkvQWxhcm0ucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/colef/eclipse-workspace/eclipse-personal/redTomato/redTomato/Pages/UI/Slider.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVUkvU2xpZGVyLnJhem9y
+[/Users/colef/eclipse-workspace/eclipse-personal/redTomato/redTomato/Pages/Slider.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2xpZGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/colef/eclipse-workspace/eclipse-personal/redTomato/redTomato/_Imports.razor]
