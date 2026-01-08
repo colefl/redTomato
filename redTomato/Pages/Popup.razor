@@ -9,7 +9,8 @@
 <button @onclick="ResetTimer">Reset</button>
 
     <div>
-        <Alarm Hours="0" Minutes="0" Seconds="0" @bind-TimerValue="totalTime"/>
+        <Alarm @bind-TimerValue="totalTime"/>
+        <button @onclick="UpdateTimer"> debug </button>
     </div>
 <p> Timer: @timeSpan.ToString(@"hh\:mm\:ss")</p>
 
@@ -21,9 +22,22 @@
    [Parameter]
    public EventCallback<ChangeEventArgs> TimerValueChanged { get; set; }
 
+   [Parameter]
+   public int TimerValue {get; set; }
+
+   [Parameter]
+    public int Hours {get; set; } //Is this being bound to the instances Hours?
+
+    [Parameter]
+    public int Minutes {get; set; }
+
+    [Parameter]
+    public int Seconds {get; set; }
+
 
     public int sliderValue = 100;
-    public int totalTime = 10;
+    public int totalTime = 0;
+    //public Alarm alarm;
     private TimeSpan timeSpan;
     private DateTime startTime;
     private Timer timer;
@@ -52,6 +66,12 @@
 
     private void UpdateTime(object state){
         timeSpan = DateTime.Now - startTime;
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void UpdateTimer(object state){
+        totalTime = (Hours * 3600) + (Minutes * 60) + Seconds;
+        //totalTime = (int)alarm.calcTotalTime();
         InvokeAsync(StateHasChanged);
     }
 }

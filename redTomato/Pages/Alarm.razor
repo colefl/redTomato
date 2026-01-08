@@ -1,43 +1,34 @@
 <div class="alarm"
-    hours="@Hours"
-    minutes="@Minutes"
-    seconds="@Seconds"
-    @bind="@totalTime"
+
+    @bind="@TimerValue"
     @bind:event="onInput">
 
-<p>Hours: </p> <input type="input" @onInput="calcTotalTime" @bind="@Hours"/>
-<p>Minutes: </p> <input type="input" @onInput="calcTotalTime" @bind="@Minutes"/>
-<p>Seconds: </p> <input type="input" @onInput="calcTotalTime" @bind="@Seconds"/>
+<p>Hours: </p> <NumberInput TValue="int?"
+                 @bind-Value="@Hours"
+                 Placeholder="Enter amount" />
+<p>Minutes: </p> <input type="input" @onInput="calcTotalTime"/>
+<p>Seconds: </p> <input type="input" @onInput="calcTotalTime"/>
 
 </div>
     
-<p> Seconds total: @totalTime</p>
-
+<p> Seconds total: @TimerValue</p>
 
 <style>
 </style>
 
 @code {
 
-    private int totalTime;
-
     [Parameter]
-    public int Hours {get; set; } //Is this a getter and setter?
-
-    [Parameter]
-    public int Minutes {get; set; }
-
-    [Parameter]
-    public int Seconds {get; set; }
-
-    [Parameter]
-    public int TimerValue {get; set; }
+    public int TimerValue {get; set; } //I believe these are parameters that must be defined for a new alarm instance upon some stack overflow scrolling
 
     [Parameter]
     public EventCallback<int> TimerValueChanged {get; set; }
 
+    private int? Hours;
+
     public void calcTotalTime(){
-        totalTime = (Hours * 3600) + (Minutes * 60) + Seconds;
+        //TimerValue = (Hours * 3600) + (Minutes * 60) + Seconds;
+        //TimerValue = 10;
         InvokeAsync(StateHasChanged);
     }
 }
