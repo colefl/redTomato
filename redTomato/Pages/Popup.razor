@@ -15,13 +15,13 @@
 @code {
 
    [Parameter]
-   public EventCallback<ChangeEventArgs> ValueChanged { get; set; }
+   public EventCallback<ChangeEventArgs> SliderValueChanged { get; set; }
 
    [Parameter]
-   public EventCallback<ChangeEventArgs> TimerChanged { get; set; }
+   public EventCallback<ChangeEventArgs> TimerValueChanged { get; set; }
 
 
-    public int sliderValue = 100;
+    public int sliderValue = 0;
     public int totalTime = 0;
     private TimeSpan timeSpan;
     private DateTime startTime;
@@ -30,7 +30,7 @@
 
     private void StartTimer(){
         if(!isRunning){
-            startTime = DateTime.Now; //The time is now
+            startTime = DateTime.Now; //The time is now billions must do nothing
             timer = new Timer(UpdateTime, null, 0, 1000);
             isRunning = true;
         }

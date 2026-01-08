@@ -1,17 +1,26 @@
-<input class="alarm"
-    type="input"
+<div class="alarm"
     hours="@Hours"
     minutes="@Minutes"
     seconds="@Seconds"
     @bind="@totalTime"
-    @bind:event="onInput"/>
+    @bind:event="onInput">
+
+<p>Hours: </p> <input type="input" @onInput="calcTotalTime" @bind="@Hours"/>
+<p>Minutes: </p> <input type="input" @onInput="calcTotalTime" @bind="@Minutes"/>
+<p>Seconds: </p> <input type="input" @onInput="calcTotalTime" @bind="@Seconds"/>
+
+</div>
     
-<p> Timer: @totalTime</p>
+<p> Seconds total: @totalTime</p>
+
 
 <style>
 </style>
 
 @code {
+
+    private int totalTime;
+
     [Parameter]
     public int Hours {get; set; } //Is this a getter and setter?
 
@@ -25,7 +34,10 @@
     public int TimerValue {get; set; }
 
     [Parameter]
-    public EventCallback<int>TimerValueChanged {get; set; }
+    public EventCallback<int> TimerValueChanged {get; set; }
 
-    private int totalTime;
+    public void calcTotalTime(){
+        totalTime = (Hours * 3600) + (Minutes * 60) + Seconds;
+        InvokeAsync(StateHasChanged);
+    }
 }
