@@ -22,7 +22,10 @@
     public int Seconds {get; set; }
 
     [Parameter]
-    public EventCallback<int>TimerChanged {get; set; }
+    public int TimerValue {get; set; }
+
+    [Parameter]
+    public EventCallback<int>TimerValueChanged {get; set; }
 
     private int totalTime;
 }

@@ -16,8 +16,8 @@
         border-radius:5px;
         appearance: none;
         background: linear-gradient(to right,
-                    #4CAF50 calc(@Value / @Max * 100%),
-                    #D3D3D3 calc(@Value / @Max * 100%));
+                    #4CAF50 calc(@SliderValue / @Max * 100%),
+                    #D3D3D3 calc(@SliderValue / @Max * 100%));
     }
 
     .slider:hover{
@@ -33,10 +33,10 @@
     public int Max {get; set; }
 
     [Parameter]
-    public int Value {get; set; }
+    public int SliderValue {get; set; }
 
     [Parameter]
-    public EventCallback<int>ValueChanged {get; set; }
+    public EventCallback<int>SliderValueChanged {get; set; }
 
     private int sliderValue;
 }

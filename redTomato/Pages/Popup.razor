@@ -2,14 +2,14 @@
 @inherits BasePage
 
 <h1 style="width:600px">hi there I'm of a larger width</h1>
-<Slider Min="0" Max="100" @bind="sliderValue" />
+<Slider Min="0" Max="100" @bind-SliderValue="sliderValue" />
 
 <button @onclick="StartTimer">Start</button>
 <button @onclick="StopTimer">Stop</button>
 <button @onclick="ResetTimer">Reset</button>
 
     <div>
-        <Alarm Hours="0" Minutes="0" Seconds="0" @bind:event="totalTime"/>
+        <Alarm Hours="0" Minutes="0" Seconds="0" @bind-TimerValue="totalTime"/>
     </div>
 
 @code {
