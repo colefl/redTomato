@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "redTomato",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-SK169AwI2dLe/wpGzkKggUqZYvIhEEL7lhkiXQ6EiJI=",
+    "hash": "sha256-hLfSKF3890JRNg5DBvkURuQ4AyHBuJJKjis/y9Jjaak=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.js"
@@ -1065,14 +1065,14 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       {
         "virtualPath": "redTomato.wasm",
         "name": "redTomato.wasm",
-        "integrity": "sha256-thCuseSx0aIB5iLwKBlIA388ceagFm0rOQ9eAflHddg="
+        "integrity": "sha256-rw3AEmD4bZrfzbDKaC/jiiN+Cw1My6zH7XJoHuS9zco="
       }
     ],
     "pdb": [
       {
         "virtualPath": "redTomato.pdb",
         "name": "redTomato.pdb",
-        "integrity": "sha256-IqR0DzllN9mLs1znfJUH+cCl8RJfHytDoamdwyNzFsQ="
+        "integrity": "sha256-c/+LFIId+NcRpDdGfM+GmjXE59y4tfTAry0+U3zqtzM="
       }
     ],
     "libraryInitializers": [
