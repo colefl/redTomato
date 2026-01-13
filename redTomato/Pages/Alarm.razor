@@ -3,9 +3,7 @@
     @bind="@TimerValue"
     @bind:event="onInput">
 
-<p>Hours: </p> <NumberInput TValue="int?"
-                 @bind-Value="@Hours"
-                 Placeholder="Enter amount" />
+<p>Minutes: </p> <input type="input" @onInput="calcTotalTime"/>
 <p>Minutes: </p> <input type="input" @onInput="calcTotalTime"/>
 <p>Seconds: </p> <input type="input" @onInput="calcTotalTime"/>
 
@@ -23,8 +21,6 @@
 
     [Parameter]
     public EventCallback<int> TimerValueChanged {get; set; }
-
-    private int? Hours;
 
     public void calcTotalTime(){
         //TimerValue = (Hours * 3600) + (Minutes * 60) + Seconds;

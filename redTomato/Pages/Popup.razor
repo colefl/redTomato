@@ -13,6 +13,7 @@
         <button @onclick="UpdateTimer"> debug </button>
     </div>
 <p> Timer: @timeSpan.ToString(@"hh\:mm\:ss")</p>
+<p> total time: @totalTime.ToString()</p>
 
 @code {
 
@@ -48,7 +49,7 @@
             startTime = DateTime.Now; //The time is now billions must do nothing
             timer = new Timer(UpdateTime, null, 0, 1000);
             isRunning = true;
-            Console.WriteLine("Hello");
+            totalTime = Hours + Minutes + Seconds;
         }
     }
 
