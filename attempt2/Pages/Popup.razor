@@ -1,4 +1,75 @@
 ﻿@page "/popup.html"
-@inherits BasePage
+@rendermode InteractiveAuto
 
-<h1>My popup page</h1>
+<h3>Set Timer</h3>
+
+<TimeInput TotalSecondsChanged="UpdateBaseTime" />
+
+<p>Base Time: @baseTime seconds</p>
+
+<Slider Min="0"
+                 Max="@initialTime"
+                 SliderValue="@remainingTime" />
+
+<p>@remainingTime seconds left</p>
+
+<button @onclick="Start">Start</button>
+<button @onclick="Stop">Stop</button>
+
+
+<hr />
+
+<h3>Speed Multiplier</h3>
+
+<input type="range"
+       min="1"
+       max="300"
+       step="1"
+       @bind="speedMultiplier" />
+
+<p>Speed: @speedMultiplier%</p>
+
+<hr />
+
+<h2>Total Time (Scaled)</h2>
+<p><strong>@scaledTime</strong> seconds</p>
+
+@code {
+    private int baseTime;
+    private int speedMultiplier = 100;
+
+    private int scaledTime =>
+        (int)(baseTime * (speedMultiplier / 100.0));
+
+    private void UpdateBaseTime(int seconds)
+    {
+        baseTime = seconds;
+    }
+
+    private int initialTime = 60;
+    private int remainingTime;
+    private PeriodicTimer? timer;
+
+    protected override void OnInitialized()
+    {
+        remainingTime = initialTime;
+    }
+
+    private async Task Start()
+    {
+        timer?.Dispose();
+        timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+
+        while (remainingTime > 0 &&
+               await timer.WaitForNextTickAsync())
+        {
+            remainingTime--;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private void Stop()
+    {
+        timer?.Dispose();
+    }
+}

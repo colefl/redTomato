@@ -1,0 +1,29 @@
+<input class="slider"
+       type="range"
+       min="@Min"
+       max="@Max"
+       value="@SliderValue"
+       disabled />
+
+<p>@PercentComplete% remaining</p>
+
+<style>
+    .slider {
+        width: 600px;
+        height: 15px;
+        border-radius: 5px;
+        appearance: none;
+        background: linear-gradient(to right,
+            #4CAF50 @(PercentComplete)%,
+            #D3D3D3 @(PercentComplete)%);
+    }
+</style>
+
+@code {
+    [Parameter] public int Min { get; set; } = 0;
+    [Parameter] public int Max { get; set; }
+    [Parameter] public int SliderValue { get; set; }
+
+    private int PercentComplete =>
+        Max == 0 ? 0 : (int)((SliderValue / (double)Max) * 100);
+}

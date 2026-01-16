@@ -1,0 +1,36 @@
+
+<div class="time-input">
+    <input type="number" placeholder="Hours"
+           min="0"
+           @bind="Hours" @bind:event="oninput"
+           @onInput="Recalculate" />
+
+    <input type="number" placeholder="Minutes"
+           min="0" max="59"
+           @bind="Minutes" @bind:event="oninput"
+           @onInput="Recalculate" />
+
+    <input type="number" placeholder="Seconds"
+           min="0" max="59"
+           @bind="Seconds" @bind:event="oninput"
+           @onInput="Recalculate" />
+</div>
+
+@code {
+    private int? Hours;
+    private int? Minutes;
+    private int? Seconds;
+
+    [Parameter]
+    public EventCallback<int> TotalSecondsChanged { get; set; }
+
+    private async Task Recalculate()
+    {
+        int total =
+            (Hours ?? 0) * 3600 +
+            Math.Clamp(Minutes ?? 0, 0, 59) * 60 +
+            Math.Clamp(Seconds ?? 0, 0, 59);
+
+        await TotalSecondsChanged.InvokeAsync(total);
+    }
+}
