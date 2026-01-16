@@ -9,8 +9,9 @@ import * as s6 from "/content/Blazor.BrowserExtension/Blazor.BrowserExtension.li
 import * as s7 from "/content/Blazor.BrowserExtension/CoreInternal.js";
 import * as s8 from "/content/Blazor.BrowserExtension/lib/browser-polyfill.min.js";
 import * as s9 from "/content/Blazor.BrowserExtension/lib/decode.min.js";
+import * as s10 from "/timerStorage.js";
 
-const allImports = [["framework/dotnet.js", s0], ["framework/dotnet.native.js", s1], ["framework/dotnet.runtime.js", s2], ["framework/blazor.webassembly.js", s3], ["content/JsBind.Net/JsBind.Net.lib.module.js", s4], ["content/Blazor.BrowserExtension/BackgroundWorkerRunner.js", s5], ["content/Blazor.BrowserExtension/Blazor.BrowserExtension.lib.module.js", s6], ["content/Blazor.BrowserExtension/CoreInternal.js", s7], ["content/Blazor.BrowserExtension/lib/browser-polyfill.min.js", s8], ["content/Blazor.BrowserExtension/lib/decode.min.js", s9]];
+const allImports = [["framework/dotnet.js", s0], ["framework/dotnet.native.js", s1], ["framework/dotnet.runtime.js", s2], ["framework/blazor.webassembly.js", s3], ["content/JsBind.Net/JsBind.Net.lib.module.js", s4], ["content/Blazor.BrowserExtension/BackgroundWorkerRunner.js", s5], ["content/Blazor.BrowserExtension/Blazor.BrowserExtension.lib.module.js", s6], ["content/Blazor.BrowserExtension/CoreInternal.js", s7], ["content/Blazor.BrowserExtension/lib/browser-polyfill.min.js", s8], ["content/Blazor.BrowserExtension/lib/decode.min.js", s9], ["timerStorage.js", s10]];
 
 const importModule = (requestedModulePath) => {
   let candidateModule;

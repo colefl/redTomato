@@ -1,20 +1,20 @@
+@rendermode InteractiveAuto
 
-<div class="time-input">
-    <input type="number" placeholder="Hours"
-           min="0"
-           @bind="Hours" @bind:event="oninput"
-           @onInput="Recalculate" />
+<input type="number" style="width:40px" placeholder="Hours" min="0" 
+       @bind-value="Hours" 
+       @bind-value:event="oninput" 
+       @bind-value:after="NotifyParent" />
 
-    <input type="number" placeholder="Minutes"
-           min="0" max="59"
-           @bind="Minutes" @bind:event="oninput"
-           @onInput="Recalculate" />
+<input type="number" style="width:40px" placeholder="Minutes" min="0" max="59" 
+       @bind-value="Minutes" 
+       @bind-value:event="oninput" 
+       @bind-value:after="NotifyParent" />
 
-    <input type="number" placeholder="Seconds"
-           min="0" max="59"
-           @bind="Seconds" @bind:event="oninput"
-           @onInput="Recalculate" />
-</div>
+<input type="number" style="width:40px" placeholder="Seconds" min="0" max="59" 
+       @bind-value="Seconds" 
+       @bind-value:event="oninput" 
+       @bind-value:after="NotifyParent" />
+
 
 @code {
     private int? Hours;
@@ -24,7 +24,7 @@
     [Parameter]
     public EventCallback<int> TotalSecondsChanged { get; set; }
 
-    private async Task Recalculate()
+    private async Task NotifyParent()
     {
         int total =
             (Hours ?? 0) * 3600 +

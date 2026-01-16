@@ -10,6 +10,7 @@
   "action": {
     "default_popup": "popup.html"
   },
+  "permissions": ["storage"],
   "options_ui": {
     "page": "options.html",
     "open_in_tab": true
@@ -19,11 +20,8 @@
   },
   "web_accessible_resources": [
     {
-      "resources": [
-        "framework/*",
-        "content/*"
-      ],
-      "matches": [ "<all_urls>" ]
+      "resources": ["framework/*", "content/*"],
+      "matches": ["<all_urls>"]
     }
   ]
 }

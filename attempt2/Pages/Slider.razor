@@ -5,7 +5,7 @@
        value="@SliderValue"
        disabled />
 
-<p>@PercentComplete% remaining</p>
+<p>@PercentDisplay% remaining</p>
 
 <style>
     .slider {
@@ -24,6 +24,13 @@
     [Parameter] public int Max { get; set; }
     [Parameter] public int SliderValue { get; set; }
 
-    private int PercentComplete =>
-        Max == 0 ? 0 : (int)((SliderValue / (double)Max) * 100);
+    private double PercentComplete =>
+        Max == 0 ? 0 : ((double)SliderValue / Max) * 100;
+
+    private string PercentDisplay => PercentComplete.ToString("0.0");
+
+    protected override bool ShouldRender()
+    {
+        return true;
+    }
 }

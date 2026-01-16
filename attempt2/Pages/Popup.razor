@@ -1,75 +1,147 @@
 ﻿@page "/popup.html"
+@inject IJSRuntime JS
 @rendermode InteractiveAuto
 
-<h3>Set Timer</h3>
+<script src="timerStorage.js"></script>
 
-<TimeInput TotalSecondsChanged="UpdateBaseTime" />
+<div id="app">
+    <div>
+        <h3 style="display:inline-block;">Timer small</h3>
+        <h3 style="display:inline-block;">Pomodoro</h3>
+    </div>
 
-<p>Base Time: @baseTime seconds</p>
+    <TimeInput TotalSecondsChanged="OnTimeChanged" />
 
-<Slider Min="0"
-                 Max="@initialTime"
-                 SliderValue="@remainingTime" />
+    <Slider Min="0" Max="@totalDuration" SliderValue="@remainingTime" />
 
-<p>@remainingTime seconds left</p>
+    <p>@FormatTime(remainingTime)</p>
+    <button @onclick="Start">Start</button>
+    <button @onclick="Pause">Pause</button>
+    <button @onclick="Reset">Reset</button>
 
-<button @onclick="Start">Start</button>
-<button @onclick="Stop">Stop</button>
-
-
-<hr />
-
-<h3>Speed Multiplier</h3>
-
-<input type="range"
-       min="1"
-       max="300"
-       step="1"
-       @bind="speedMultiplier" />
-
-<p>Speed: @speedMultiplier%</p>
-
-<hr />
-
-<h2>Total Time (Scaled)</h2>
-<p><strong>@scaledTime</strong> seconds</p>
+    <div>
+        <input type="number" min="0" max="100" placeholder="add at" @bind="Breakpoint"/>
+        <button @onclick="AddBreakpoint">Add Breakpoint</button>
+    </div>
+</div>
 
 @code {
-    private int baseTime;
-    private int speedMultiplier = 100;
-
-    private int scaledTime =>
-        (int)(baseTime * (speedMultiplier / 100.0));
-
-    private void UpdateBaseTime(int seconds)
+    public class TimerState
     {
-        baseTime = seconds;
+        public int remaining { get; set; }
+        public int total { get; set; }
+        public long? lastStart { get; set; }
+        public bool isRunning { get; set; }
     }
 
-    private int initialTime = 60;
+    private List<int> breakpoints = new();
+    private int Breakpoint;
+    private int totalDuration;
     private int remainingTime;
-    private PeriodicTimer? timer;
+    private bool isRunning;
+    private PeriodicTimer? uiTimer;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        remainingTime = initialTime;
+        await RestoreTimer();
+        StartUiLoop();
+    }
+
+    private void OnTimeChanged(int seconds)
+    {
+        totalDuration = seconds;
+        if (!isRunning)
+        {
+            remainingTime = seconds;
+        }
+        StateHasChanged();
     }
 
     private async Task Start()
     {
-        timer?.Dispose();
-        timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+        if (totalDuration <= 0)
+            return;
 
-        while (remainingTime > 0 &&
-               await timer.WaitForNextTickAsync())
+        isRunning = true;
+        await JS.InvokeVoidAsync(
+            "timerStorage.saveStart",
+            remainingTime,
+            totalDuration
+        );
+    }
+
+    private async Task Pause()
+    {
+        isRunning = false;
+        await JS.InvokeVoidAsync(
+            "timerStorage.savePause",
+            remainingTime,
+            totalDuration
+        );
+    }
+
+    private async Task Reset()
+    {
+        await JS.InvokeVoidAsync("timerStorage.clear");
+        remainingTime = totalDuration;
+        isRunning = false;
+    }
+
+    private async Task RestoreTimer()
+    {
+        var state = await JS.InvokeAsync<TimerState>(
+            "timerStorage.load"
+        );
+
+        if (state?.total > 0)
         {
-            remainingTime--;
-            await InvokeAsync(StateHasChanged);
+            totalDuration = state.total;
+            remainingTime = state.remaining;
+            isRunning = state.isRunning;
+            
+            if (state.isRunning && state.lastStart.HasValue)
+            {
+                var elapsed = (DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - state.lastStart.Value) / 1000;
+                remainingTime = Math.Max(remainingTime - (int)elapsed, 0);
+                
+                if (remainingTime <= 0)
+                {
+                    isRunning = false;
+                    await JS.InvokeVoidAsync("timerStorage.clear");
+                }
+            }
         }
     }
 
-    private void Stop()
+    private void StartUiLoop()
     {
-        timer?.Dispose();
+        uiTimer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+
+        _ = Task.Run(async () =>
+        {
+            while (await uiTimer.WaitForNextTickAsync())
+            {
+                if (isRunning && remainingTime > 0)
+                {
+                    await RestoreTimer();
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
+        });
+    }
+
+    private static string FormatTime(int seconds)
+    {
+        var ts = TimeSpan.FromSeconds(seconds);
+        return ts.ToString(@"hh\:mm\:ss");
+    }
+
+    private void AddBreakpoint()
+    {
+        if (Breakpoint >= 0 && Breakpoint <= 100)
+        {
+            breakpoints.Add(Breakpoint);
+            Breakpoint = 0;
+        }
     }
 }
