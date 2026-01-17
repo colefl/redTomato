@@ -6,7 +6,6 @@
 
 <div id="app">
     <div>
-        <h3 style="display:inline-block;">Timer small</h3>
         <h3 style="display:inline-block;">Pomodoro</h3>
     </div>
 
@@ -30,7 +29,6 @@
     {
         public int remaining { get; set; }
         public int total { get; set; }
-        public long? lastStart { get; set; }
         public bool isRunning { get; set; }
     }
 
@@ -63,9 +61,10 @@
             return;
 
         isRunning = true;
+        remainingTime = totalDuration;
+        
         await JS.InvokeVoidAsync(
             "timerStorage.saveStart",
-            remainingTime,
             totalDuration
         );
     }
@@ -73,43 +72,33 @@
     private async Task Pause()
     {
         isRunning = false;
-        await JS.InvokeVoidAsync(
-            "timerStorage.savePause",
-            remainingTime,
-            totalDuration
-        );
+        await JS.InvokeVoidAsync("timerStorage.savePause");
     }
 
     private async Task Reset()
     {
+        isRunning = false;
         await JS.InvokeVoidAsync("timerStorage.clear");
         remainingTime = totalDuration;
-        isRunning = false;
+        StateHasChanged();
     }
 
     private async Task RestoreTimer()
     {
-        var state = await JS.InvokeAsync<TimerState>(
-            "timerStorage.load"
-        );
-
-        if (state?.total > 0)
+        try
         {
-            totalDuration = state.total;
-            remainingTime = state.remaining;
-            isRunning = state.isRunning;
-            
-            if (state.isRunning && state.lastStart.HasValue)
+            var state = await JS.InvokeAsync<TimerState>("timerStorage.load");
+
+            if (state != null && state.total > 0)
             {
-                var elapsed = (DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - state.lastStart.Value) / 1000;
-                remainingTime = Math.Max(remainingTime - (int)elapsed, 0);
-                
-                if (remainingTime <= 0)
-                {
-                    isRunning = false;
-                    await JS.InvokeVoidAsync("timerStorage.clear");
-                }
+                totalDuration = state.total;
+                remainingTime = state.remaining;
+                isRunning = state.isRunning;
             }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error restoring timer: {ex.Message}");
         }
     }
 

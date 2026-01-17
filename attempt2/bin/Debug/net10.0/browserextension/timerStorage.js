@@ -1,32 +1,34 @@
 window.timerStorage = {
-  saveStart: (remainingSeconds, totalSeconds) => {
-    chrome.storage.local.set({
-      remaining: remainingSeconds,
-      total: totalSeconds,
-      lastStart: Date.now(),
-      isRunning: true,
-    });
-  },
-
-  savePause: (remainingSeconds, totalSeconds) => {
-    chrome.storage.local.set({
-      remaining: remainingSeconds,
-      total: totalSeconds,
-      lastStart: null,
-      isRunning: false,
-    });
-  },
-
-  load: () => {
+  saveStart: async (totalSeconds) => {
     return new Promise((resolve) => {
-      chrome.storage.local.get(
-        ["remaining", "total", "lastStart", "isRunning"],
-        (result) => resolve(result)
+      chrome.runtime.sendMessage(
+        { action: "startTimer", duration: totalSeconds },
+        (response) => resolve(response)
       );
     });
   },
 
-  clear: () => {
-    chrome.storage.local.clear();
+  savePause: async () => {
+    return new Promise((resolve) => {
+      chrome.runtime.sendMessage({ action: "pauseTimer" }, (response) =>
+        resolve(response)
+      );
+    });
+  },
+
+  load: async () => {
+    return new Promise((resolve) => {
+      chrome.runtime.sendMessage({ action: "getTimeRemaining" }, (response) =>
+        resolve(response)
+      );
+    });
+  },
+
+  clear: async () => {
+    return new Promise((resolve) => {
+      chrome.runtime.sendMessage({ action: "resetTimer" }, (response) =>
+        resolve(response)
+      );
+    });
   },
 };

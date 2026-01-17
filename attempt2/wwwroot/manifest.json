@@ -1,16 +1,15 @@
 ﻿{
   "manifest_version": 3,
-  "name": "attempt2 Extension",
+  "name": "Pomodoro Timer Extension",
   "description": "My browser extension built with Blazor WebAssembly",
   "version": "0.1",
   "background": {
-    "service_worker": "content/BackgroundWorker.js",
-    "type": "module"
+    "service_worker": "background.js"
   },
   "action": {
     "default_popup": "popup.html"
   },
-  "permissions": ["storage"],
+  "permissions": ["storage", "alarms", "notifications", "offscreen"],
   "options_ui": {
     "page": "options.html",
     "open_in_tab": true
@@ -20,7 +19,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["framework/*", "content/*"],
+      "resources": ["framework/*", "content/*", "Alarm.mp3"],
       "matches": ["<all_urls>"]
     }
   ]

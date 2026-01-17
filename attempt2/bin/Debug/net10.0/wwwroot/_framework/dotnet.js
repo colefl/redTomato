@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "attempt2",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-J2B0rg5lcbV5MHOjtxVuCpBP85Js8diKXEa9/nl+wIU=",
+    "hash": "sha256-qJRcGkrgm9gEn+Li3g/sgzNrSBrblQnHDnWrU13Bsyw=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.js"
@@ -1065,14 +1065,14 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       {
         "virtualPath": "attempt2.wasm",
         "name": "attempt2.wasm",
-        "integrity": "sha256-dpm9oZMuCZElV4heHBSlktXedXlfh8QRRhivrOIg+SM="
+        "integrity": "sha256-aIgnzpi298wtFVO5bpB0BrJyiArPSWeKXNautH/Uhlk="
       }
     ],
     "pdb": [
       {
         "virtualPath": "attempt2.pdb",
         "name": "attempt2.pdb",
-        "integrity": "sha256-7Dd3NaWHo4sITqy2PxUzPrhE+I+hUgJhrry7k5YVZno="
+        "integrity": "sha256-XH4oEyeA/FNgP+Jaa07xCDngApnlOYX4rg+FMB1IfD8="
       }
     ],
     "libraryInitializers": [
