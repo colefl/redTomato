@@ -1,4 +1,7 @@
-<div style="position: relative; width: 600px;">
+<div style="position: relative; width: 400px; 
+    display: flex;
+    justify-content: center;
+        align-items: center;">
     <input class="slider"
            type="range"
            min="@Min"
@@ -13,28 +16,28 @@
     }
 </div>
 
-<p>@PercentDisplay% remaining</p>
+<p class="tiny5-regular" style="margin-top:5px">@PercentDisplay% remaining</p>
 
 <style>
     .slider {
-        width: 600px;
+        width: 350px;
         height: 15px;
         border-radius: 5px;
         appearance: none;
         background: linear-gradient(to right,
-            #4CAF50 @(PercentComplete)%,
-            #D3D3D3 @(PercentComplete)%);
+            #C49799 @(PercentComplete)%,
+            #BFB6BB @(PercentComplete)%);
     }
     
     .breakpoint-marker {
         position: absolute;
         top: 0;
-        width: 3px;
+        width: 5px;
         height: 15px;
-        background-color: #FF6B6B;
+        background-color: #A5D8FF;
         transform: translateX(-50%);
         pointer-events: none;
-        border-radius: 2px;
+        border-radius: 5px;
         z-index: 10;
     }
 </style>

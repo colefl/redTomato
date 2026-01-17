@@ -675,3 +675,4 @@
 /Users/colef/eclipse-workspace/eclipse-personal/redTomato/attempt2/bin/Debug/net10.0/wwwroot/background.js
 /Users/colef/eclipse-workspace/eclipse-personal/redTomato/attempt2/bin/Debug/net10.0/wwwroot/offscreen.html
 /Users/colef/eclipse-workspace/eclipse-personal/redTomato/attempt2/bin/Debug/net10.0/wwwroot/offscreen.js
+/Users/colef/eclipse-workspace/eclipse-personal/redTomato/attempt2/bin/Debug/net10.0/wwwroot/css/timer.css

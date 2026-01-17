@@ -1,16 +1,15 @@
 @rendermode InteractiveAuto
-
-<input type="number" style="width:40px" placeholder="Hours" min="0" 
+<input type="number" style="width:60px" class="tiny5-regular" placeholder="Hours" min="0" 
        @bind-value="Hours" 
        @bind-value:event="oninput" 
        @bind-value:after="NotifyParent" />
 
-<input type="number" style="width:40px" placeholder="Minutes" min="0" max="59" 
+<input type="number" style="width:60px" class="tiny5-regular" placeholder="Minutes" min="0" max="59" 
        @bind-value="Minutes" 
        @bind-value:event="oninput" 
        @bind-value:after="NotifyParent" />
 
-<input type="number" style="width:40px" placeholder="Seconds" min="0" max="59" 
+<input type="number" style="width:60px" class="tiny5-regular" placeholder="Seconds" min="0" max="59" 
        @bind-value="Seconds" 
        @bind-value:event="oninput" 
        @bind-value:after="NotifyParent" />
