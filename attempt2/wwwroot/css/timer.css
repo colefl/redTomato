@@ -28,3 +28,12 @@ hr {
 .placeholder {
   color: #afd0d6;
 }
+
+input {
+  background-color: #e0f2e9;
+}
+
+::placeholder {
+  /* Most modern browsers support this now. */
+  color: #9dacff;
+}

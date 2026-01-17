@@ -9,19 +9,20 @@
         <p class="tiny5-regular" style="display:inline-block; float:right; font-size:15px">@FormatTime(remainingTime)</p>
     </div>
 
-    <TimeInput TotalSecondsChanged="OnTimeChanged" />
+    @if(!isRunning){
+        <TimeInput TotalSecondsChanged="OnTimeChanged" />
+    }
 
     <hr />
 
     <Slider Min="0" Max="@totalDuration" SliderValue="@remainingTime" Breakpoints="@breakpoints" />
 
-    <hr />
     <button @onclick="Start" class="button-container tiny5-regular">Start</button>
     <button @onclick="Pause" class="button-container tiny5-regular">Pause</button>
     <button @onclick="Reset" class="button-container tiny5-regular">Reset</button>
 
     <div style="margin-bottom: 10px;">
-        <input type="number" min="0" max="100" placeholder="Percentage (0-100)" class="tiny5-regular" @bind="Breakpoint"/>
+        <input type="number" min="0" max="100" placeholder="0" class="tiny5-regular" @bind="Breakpoint"/>
         <button @onclick="AddBreakpoint" class="tiny5-regular button-container">Add Breakpoint</button>
     </div>
 
@@ -57,6 +58,7 @@
     private int lastCheckedTime;
     private bool isRunning;
     private PeriodicTimer? uiTimer;
+    //private bool hidden;
 
     protected override async Task OnInitializedAsync()
     {
