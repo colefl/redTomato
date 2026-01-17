@@ -2,16 +2,15 @@
 @inject IJSRuntime JS
 @rendermode InteractiveAuto
 
-<script src="timerStorage.js"></script>
-
 <div id="app">
     <div>
+        <h3 style="display:inline-block;">Timer small</h3>
         <h3 style="display:inline-block;">Pomodoro</h3>
     </div>
 
     <TimeInput TotalSecondsChanged="OnTimeChanged" />
 
-    <Slider Min="0" Max="@totalDuration" SliderValue="@remainingTime" />
+    <Slider Min="0" Max="@totalDuration" SliderValue="@remainingTime" Breakpoints="@breakpoints" />
 
     <p>@FormatTime(remainingTime)</p>
     <button @onclick="Start">Start</button>
@@ -19,9 +18,22 @@
     <button @onclick="Reset">Reset</button>
 
     <div>
-        <input type="number" min="0" max="100" placeholder="add at" @bind="Breakpoint"/>
+        <input type="number" min="0" max="100" placeholder="Percentage (0-100)" @bind="Breakpoint"/>
         <button @onclick="AddBreakpoint">Add Breakpoint</button>
     </div>
+
+    @if (breakpoints.Any())
+    {
+        <div style="margin-top: 10px;">
+            <h4>Active Breakpoints:</h4>
+            <ul>
+                @foreach (var bp in breakpoints.OrderByDescending(b => b))
+                {
+                    <li>@bp% (@FormatTime((int)(totalDuration * bp / 100.0)))</li>
+                }
+            </ul>
+        </div>
+    }
 </div>
 
 @code {
@@ -30,12 +42,14 @@
         public int remaining { get; set; }
         public int total { get; set; }
         public bool isRunning { get; set; }
+        public List<int> breakpoints { get; set; }
     }
 
     private List<int> breakpoints = new();
     private int Breakpoint;
     private int totalDuration;
     private int remainingTime;
+    private int lastCheckedTime;
     private bool isRunning;
     private PeriodicTimer? uiTimer;
 
@@ -62,17 +76,24 @@
 
         isRunning = true;
         remainingTime = totalDuration;
+        lastCheckedTime = remainingTime;
         
         await JS.InvokeVoidAsync(
             "timerStorage.saveStart",
-            totalDuration
+            totalDuration,
+            breakpoints
         );
     }
 
     private async Task Pause()
     {
         isRunning = false;
-        await JS.InvokeVoidAsync("timerStorage.savePause");
+        await JS.InvokeVoidAsync(
+            "timerStorage.savePause",
+            remainingTime,
+            totalDuration,
+            breakpoints
+        );
     }
 
     private async Task Reset()
@@ -80,6 +101,8 @@
         isRunning = false;
         await JS.InvokeVoidAsync("timerStorage.clear");
         remainingTime = totalDuration;
+        lastCheckedTime = totalDuration;
+        breakpoints.Clear(); // Clear breakpoints on reset
         StateHasChanged();
     }
 
@@ -93,7 +116,13 @@
             {
                 totalDuration = state.total;
                 remainingTime = state.remaining;
+                lastCheckedTime = state.remaining;
                 isRunning = state.isRunning;
+                
+                if (state.breakpoints != null)
+                {
+                    breakpoints = state.breakpoints;
+                }
             }
         }
         catch (Exception ex)
@@ -127,10 +156,13 @@
 
     private void AddBreakpoint()
     {
-        if (Breakpoint >= 0 && Breakpoint <= 100)
+        if (Breakpoint > 0 && Breakpoint < 100 && !breakpoints.Contains(Breakpoint))
         {
             breakpoints.Add(Breakpoint);
+            breakpoints.Sort();
+            breakpoints.Reverse(); // Highest percentage first
             Breakpoint = 0;
+            StateHasChanged();
         }
     }
 }

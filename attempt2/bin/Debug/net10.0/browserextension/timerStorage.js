@@ -1,17 +1,27 @@
 window.timerStorage = {
-  saveStart: async (totalSeconds) => {
+  saveStart: async (totalSeconds, breakpoints) => {
     return new Promise((resolve) => {
       chrome.runtime.sendMessage(
-        { action: "startTimer", duration: totalSeconds },
+        {
+          action: "startTimer",
+          duration: totalSeconds,
+          breakpoints: breakpoints || [],
+        },
         (response) => resolve(response)
       );
     });
   },
 
-  savePause: async () => {
+  savePause: async (remainingSeconds, totalSeconds, breakpoints) => {
     return new Promise((resolve) => {
-      chrome.runtime.sendMessage({ action: "pauseTimer" }, (response) =>
-        resolve(response)
+      chrome.runtime.sendMessage(
+        {
+          action: "pauseTimer",
+          remaining: remainingSeconds,
+          total: totalSeconds,
+          breakpoints: breakpoints || [],
+        },
+        (response) => resolve(response)
       );
     });
   },

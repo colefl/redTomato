@@ -1,9 +1,17 @@
-<input class="slider"
-       type="range"
-       min="@Min"
-       max="@Max"
-       value="@SliderValue"
-       disabled />
+<div style="position: relative; width: 600px;">
+    <input class="slider"
+           type="range"
+           min="@Min"
+           max="@Max"
+           value="@SliderValue"
+           disabled />
+    
+    <!-- Breakpoint markers -->
+    @foreach (var breakpoint in Breakpoints)
+    {
+        <div class="breakpoint-marker" style="left: @(breakpoint)%;"></div>
+    }
+</div>
 
 <p>@PercentDisplay% remaining</p>
 
@@ -17,12 +25,25 @@
             #4CAF50 @(PercentComplete)%,
             #D3D3D3 @(PercentComplete)%);
     }
+    
+    .breakpoint-marker {
+        position: absolute;
+        top: 0;
+        width: 3px;
+        height: 15px;
+        background-color: #FF6B6B;
+        transform: translateX(-50%);
+        pointer-events: none;
+        border-radius: 2px;
+        z-index: 10;
+    }
 </style>
 
 @code {
     [Parameter] public int Min { get; set; } = 0;
     [Parameter] public int Max { get; set; }
     [Parameter] public int SliderValue { get; set; }
+    [Parameter] public List<int> Breakpoints { get; set; } = new();
 
     private double PercentComplete =>
         Max == 0 ? 0 : ((double)SliderValue / Max) * 100;

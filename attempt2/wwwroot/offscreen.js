@@ -3,8 +3,9 @@ let audioReady = false;
 
 document.addEventListener("DOMContentLoaded", () => {
   const audio = document.getElementById("alarm");
+  const breakpointAudio = document.getElementById("breakpoint");
+
   if (audio) {
-    // Preload the audio
     audio.load();
     audio.addEventListener("canplaythrough", () => {
       audioReady = true;
@@ -12,11 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     audio.addEventListener("error", (e) => {
       console.error("Audio load error:", e);
-      console.error("Audio src:", audio.src);
-      console.error("Audio error code:", audio.error?.code);
     });
-  } else {
-    console.error("Audio element not found!");
+  }
+
+  if (breakpointAudio) {
+    breakpointAudio.load();
+    console.log("Breakpoint audio loaded");
   }
 });
 
@@ -29,18 +31,27 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       return;
     }
 
-    if (!audioReady) {
-      console.warn("Audio not fully loaded yet, attempting to play anyway...");
-    }
-
-    console.log("Attempting to play sound...");
+    console.log("Playing alarm sound...");
     audio
       .play()
-      .then(() => {
-        console.log("MP3 sound played successfully");
-      })
-      .catch((err) => {
-        console.error("Error playing sound:", err.name, err.message);
-      });
+      .then(() => console.log("Alarm played successfully"))
+      .catch((err) => console.error("Error playing alarm:", err.message));
+  }
+
+  if (request.action === "playBreakpointSound") {
+    const breakpointAudio = document.getElementById("breakpoint");
+
+    if (!breakpointAudio) {
+      console.error("Breakpoint audio element not found");
+      return;
+    }
+
+    console.log("Playing breakpoint sound...");
+    breakpointAudio
+      .play()
+      .then(() => console.log("Breakpoint sound played successfully"))
+      .catch((err) =>
+        console.error("Error playing breakpoint sound:", err.message)
+      );
   }
 });
