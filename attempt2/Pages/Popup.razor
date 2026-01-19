@@ -13,7 +13,12 @@
         <TimeInput TotalSecondsChanged="OnTimeChanged" />
     }
 
-    <hr />
+    <div style="position: relative; width: 400px; 
+    display: flex;
+    justify-content: center;
+        align-items: center;">
+        <hr/>
+    </div>
 
     <Slider Min="0" Max="@totalDuration" SliderValue="@remainingTime" Breakpoints="@breakpoints" />
 
