@@ -4,7 +4,14 @@
   "description": "My browser extension built with Blazor WebAssembly",
   "version": "0.1",
   "background": {
-    "service_worker": "background.js"
+  "scripts": [ "background.js" ],
+  "type": "module"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "attempt2@yourdomain.example",
+      "strict_min_version": "115.0"
+    }
   },
   "action": {
     "default_popup": "popup.html"
